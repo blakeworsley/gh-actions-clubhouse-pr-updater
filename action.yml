@@ -1,0 +1,26 @@
+name: "clubhouse-pr-updater"
+description: "Update PR with Clubhouse Story Details"
+inputs:
+  descriptionHeader:
+    description: "Specific title to search for in the body of the existing pull request. This text will be replaced with the description of the clubhouse story."
+    required: true
+    default: "### What does this pull request do?"
+  urlHeader:
+    description: "Specific url header to search for in the body of the existing pull request. This text will be replaced with the url and title of the clubhouse story."
+    required: true
+    default: "### What is the relevant story?"
+  delimiter:
+    description: "Delimeter before and after both the description and the url that the body will be split on."
+    required: true
+    default: "___"
+  GITHUB_TOKEN: # token for github api access
+    description: "Github token"
+    required: true
+    default: ""
+  CLUBHOUSE_TOKEN: # token for clubhouse api access
+    description: "Clubhouse token"
+    required: true
+    default: ""
+runs:
+  using: "node12"
+  main: "dist/index.js"
