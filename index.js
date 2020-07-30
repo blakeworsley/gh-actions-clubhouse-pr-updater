@@ -7,7 +7,7 @@ const getStoryIdFromBranch = (ref) => {
   if (ref) {
     const chPatternMatch = ref.match(/ch[0-9]{5,}/);
     if (chPatternMatch) {
-      const idMatch = chPatternMatch.match(/[0-9]{5,}/);
+      const idMatch = chPatternMatch[0].match(/[0-9]{5,}/);
       id = idMatch ? idMatch[0] : null;
     }
   }
