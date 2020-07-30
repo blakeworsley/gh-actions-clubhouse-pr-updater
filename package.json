@@ -1,12 +1,6 @@
 {
   "dependencies": {
-    "@actions/core": "^1.2.2",
-    "@actions/github": "^2.1.0"
-  },
-  "scripts": {
-    "build": "ncc build index.js"
-  },
-  "devDependencies": {
-    "@zeit/ncc": "^0.22.3"
+    "@actions/core": "1.2.4",
+    "@actions/github": "4.0.0"
   }
 }
