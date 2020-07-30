@@ -1,5 +1,8 @@
 name: "clubhouse-pr-updater"
 description: "Update PR with Clubhouse Story Details"
+branding:
+  icon: "align-left"
+  color: "orange"
 inputs:
   descriptionHeader:
     description: "Specific title to search for in the body of the existing pull request. This text will be replaced with the description of the clubhouse story."
