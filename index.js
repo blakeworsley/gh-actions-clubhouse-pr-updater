@@ -58,7 +58,7 @@ const updatePR = async (url, title, description) => {
   request.body = sanitizeBody(body, url, title, description);
 
   // Update the PR
-  const client = new github.GitHub(github_token);
+  const client = new github.getOctokit(github_token);
   const response = await client.pulls.update(request);
   core.info(`response: ${response.status}`);
   console.log("PR was successfully updated");
