@@ -2,15 +2,16 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const fetch = require("node-fetch");
 
-const getStoryIdFromBranch = ref => {
-  const id =
-    ref &&
-    ref.includes("/ch") &&
-    ref
-      .split("/")
-      .find(f => f.includes("ch") && parseInt(f.split("ch")[1]))
-      .split("ch")[1];
-  return id ? id : null;
+const getStoryIdFromBranch = (ref) => {
+  let id = null;
+  if (ref) {
+    const chPatternMatch = ref.match(/ch[0-9]{5,}/);
+    if (chPatternMatch) {
+      const idMatch = chPatternMatch.match(/[0-9]{5,}/);
+      id = idMatch ? idMatch[0] : null;
+    }
+  }
+  return id;
 };
 
 const getClubhouseStory = (storyId, token) => {
@@ -18,8 +19,8 @@ const getClubhouseStory = (storyId, token) => {
     `https://api.clubhouse.io/api/v3/stories/${storyId}?token=${token}`,
     { method: "GET", redirect: "follow" }
   )
-    .then(result => result.json())
-    .catch(error => error);
+    .then((result) => result.json())
+    .catch((error) => error);
 };
 
 const sanitizeBody = (body, url, title, description) => {
@@ -32,7 +33,7 @@ const sanitizeBody = (body, url, title, description) => {
   const delimiter = core.getInput("delimiter");
   const bodyParts = body.split(delimiter);
 
-  const newBody = bodyParts.map(part => {
+  const newBody = bodyParts.map((part) => {
     if (part.includes(descriptionHeader)) {
       return `${descriptionHeader}\n${descriptionBody}\n`;
     }
@@ -51,7 +52,7 @@ const updatePR = async (url, title, description) => {
   const request = {
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
-    pull_number: github.context.payload.pull_request.number
+    pull_number: github.context.payload.pull_request.number,
   };
   const body = github.context.payload.pull_request.body;
   request.body = sanitizeBody(body, url, title, description);
