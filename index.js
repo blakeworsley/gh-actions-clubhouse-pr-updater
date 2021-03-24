@@ -5,9 +5,9 @@ const fetch = require("node-fetch");
 const getStoryIdFromBranch = (ref) => {
   let id = null;
   if (ref) {
-    const chPatternMatch = ref.match(/ch[0-9]{5,}/);
+    const chPatternMatch = ref.match(/ch[0-9]{1,}/);
     if (chPatternMatch) {
-      const idMatch = chPatternMatch[0].match(/[0-9]{5,}/);
+      const idMatch = chPatternMatch[0].match(/[0-9]{1,}/);
       id = idMatch ? idMatch[0] : null;
     }
   }
@@ -78,6 +78,8 @@ const run = async () => {
       await updatePR(story.app_url, story.name, story.description);
     } else {
       console.log("PR was not updated");
+      console.log("Parsed story ID: ", storyId)
+      console.log("Clubhouse error: ", story)
     }
   } catch (error) {
     core.setFailed(error.message);
