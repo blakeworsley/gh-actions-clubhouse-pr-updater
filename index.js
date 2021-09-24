@@ -23,8 +23,15 @@ const getStoryIdFromBranch = (ref) => {
 
 const getClubhouseStory = (storyId, token) => {
   return fetch(
-    `https://api.shortcut.com/api/v3/stories/${storyId}?token=${token}`,
-    { method: "GET", redirect: "follow" }
+    `https://api.app.shortcut.com/api/v3/stories/${storyId}`,
+    {
+      method: "GET",
+      redirect: "follow",
+      headers: {
+        "Content-Type": "application/json",
+        "Shortcut-Token": token
+      }
+    }
   )
     .then((result) => result.json())
     .catch((error) => error);
@@ -80,6 +87,8 @@ const run = async () => {
     const story = storyId
       ? await getClubhouseStory(storyId, clubhouse_token)
       : null;
+
+    console.log(story)
 
     if (story) {
       await updatePR(story.app_url, story.name, story.description);
