@@ -5,10 +5,17 @@ const fetch = require("node-fetch");
 const getStoryIdFromBranch = (ref) => {
   let id = null;
   if (ref) {
-    const chPatternMatch = ref.match(/sc[0-9]{1,}/);
+    const chPatternMatch = ref.match(/sc-[0-9]{1,}/);
     if (chPatternMatch) {
       const idMatch = chPatternMatch[0].match(/[0-9]{1,}/);
       id = idMatch ? idMatch[0] : null;
+      if (id === null) {
+        console.log(`Did not find a valid integer related to the story regex: ${chPatternMatch}`)
+      } else {
+        console.log(`Found story ID: ${id}`)
+      }
+    } else {
+      console.log('Did not find a story id in the branch name')
     }
   }
   return id;
@@ -16,7 +23,7 @@ const getStoryIdFromBranch = (ref) => {
 
 const getClubhouseStory = (storyId, token) => {
   return fetch(
-    `https://api.clubhouse.io/api/v3/stories/${storyId}?token=${token}`,
+    `https://api.shortcut.com/api/v3/stories/${storyId}?token=${token}`,
     { method: "GET", redirect: "follow" }
   )
     .then((result) => result.json())
