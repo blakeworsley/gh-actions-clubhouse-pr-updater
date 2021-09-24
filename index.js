@@ -5,7 +5,7 @@ const fetch = require("node-fetch");
 const getStoryIdFromBranch = (ref) => {
   let id = null;
   if (ref) {
-    const chPatternMatch = ref.match(/ch[0-9]{1,}/);
+    const chPatternMatch = ref.match(/sc[0-9]{1,}/);
     if (chPatternMatch) {
       const idMatch = chPatternMatch[0].match(/[0-9]{1,}/);
       id = idMatch ? idMatch[0] : null;
